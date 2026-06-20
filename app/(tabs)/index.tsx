@@ -1,98 +1,186 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
+import { CounterButtons } from '@/components/counter-buttons';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+
+function CounterDisplay({
+  count,
+  onAdd,
+  onMinus,
+  onReset,
+}: {
+  count: number;
+  onAdd: () => void;
+  onMinus: () => void;
+  onReset: () => void;
+}) {
+  return (
+    <View style={styles.childCard}>
+      <View style={styles.childHeaderRow}>
+        <ThemedText style={styles.childTitle}>THIS IS THE CHILD COMPONENT</ThemedText>
+        <ThemedText style={styles.childSubtitle}>(CounterDisplay)</ThemedText>
+      </View>
+      <ThemedText style={styles.childBody}>I'm the Child Component</ThemedText>
+
+      <View style={styles.countCard}>
+        <View style={[styles.propBox, styles.topPropBox]}>
+          <ThemedText style={styles.propLabel}>PROPS DATA</ThemedText>
+          <ThemedText style={styles.propMeta}>(Comes from the Parent State)</ThemedText>
+        </View>
+
+        <View style={styles.countContainer}>
+          <ThemedText style={styles.childCount}>{count}</ThemedText>
+        </View>
+
+        <View style={[styles.propBox, styles.bottomPropBox]}>
+          <ThemedText style={styles.propLabel}>PROPS FUNCTION</ThemedText>
+          <ThemedText style={styles.propMeta}>Triggers Parent State</ThemedText>
+        </View>
+      </View>
+
+      <CounterButtons onAdd={onAdd} onMinus={onMinus} onReset={onReset} />
+    </View>
+  );
+}
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [count, setCount] = useState(100);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <ThemedView style={styles.screenShell}>
+        <ThemedText style={styles.screenTop}>Parent Component</ThemedText>
+        <ThemedText style={styles.screenSubtitle}>The Parent Component that has state locker and child component.</ThemedText>
+
+        <View style={styles.parentStateCard}>
+          <ThemedText style={styles.parentLabel}>STATE LOCKER</ThemedText>
+          <ThemedText style={styles.parentCount}>{count}</ThemedText>
+        </View>
+
+        <CounterDisplay
+          count={count}
+          onAdd={() => setCount((value) => value + 1)}
+          onMinus={() => setCount((value) => value - 1)}
+          onReset={() => setCount(100)}
+        />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#120d26',
   },
-  stepContainer: {
-    gap: 8,
+  screenShell: {
+    flex: 1,
+    backgroundColor: '#161239',
+    borderRadius: 30,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: '#3e3c7a',
+  },
+  screenTop: {
+    color: '#f8f4ff',
+    fontSize: 28,
+    fontWeight: '800',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  screenSubtitle: {
+    color: '#b3b1d4',
+    fontSize: 14,
+    marginBottom: 24,
+  },
+  parentStateCard: {
+    backgroundColor: '#2c2763',
+    borderRadius: 24,
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    marginBottom: 26,
+    borderWidth: 1,
+    borderColor: '#4f4a9d',
+  },
+  parentLabel: {
+    color: '#9da7ff',
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.1,
+    marginBottom: 10,
+  },
+  parentCount: {
+    color: '#ffffff',
+    fontSize: 62,
+    fontWeight: '900',
+  },
+  childCard: {
+    backgroundColor: '#1b1840',
+    borderRadius: 28,
+    padding: 22,
+    borderWidth: 1,
+    borderColor: '#3e3c7a',
+  },
+  childHeaderRow: {
+    marginBottom: 12,
+  },
+  childTitle: {
+    color: '#f3edf5',
+    fontSize: 18,
+    fontWeight: '800',
+    marginBottom: 2,
+  },
+  childSubtitle: {
+    color: '#a29fd1',
+    fontSize: 13,
+  },
+  childBody: {
+    color: '#dcd7ff',
+    fontSize: 15,
+    marginBottom: 18,
+  },
+  propBox: {
+    backgroundColor: '#272159',
+    padding: 14,
+  },
+  topPropBox: {
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+  },
+  bottomPropBox: {
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
+  
+  },
+  propLabel: {
+    color: '#c2c0ff',
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+  propMeta: {
+    color: '#9a97c6',
+    fontSize: 12,
+  },
+  countCard: {
+    borderRadius: 22,
+    overflow: 'hidden',
+    marginBottom: 20,
+    backgroundColor: '#272159',
+  },
+  countContainer: {
+    backgroundColor: '#1e173e',
+    paddingVertical: 40,
+    alignItems: 'center',
+  },
+  childCount: {
+    color: '#fefefe',
+    fontSize: 82,
+    fontWeight: '900',
+    textAlign: 'center',
   },
 });
