@@ -19,24 +19,20 @@ function CounterDisplay({
   return (
     <View style={styles.childCard}>
       <View style={styles.childHeaderRow}>
-        <ThemedText style={styles.childTitle}>THIS IS THE CHILD COMPONENT</ThemedText>
-        <ThemedText style={styles.childSubtitle}>(CounterDisplay)</ThemedText>
+
       </View>
-      <ThemedText style={styles.childBody}>I'm the Child Component</ThemedText>
 
       <View style={styles.countCard}>
         <View style={[styles.propBox, styles.topPropBox]}>
-          <ThemedText style={styles.propLabel}>PROPS DATA</ThemedText>
-          <ThemedText style={styles.propMeta}>(Comes from the Parent State)</ThemedText>
+
         </View>
 
         <View style={styles.countContainer}>
+          <ThemedText style={styles.childTitle}>COUNTER DISPLAY</ThemedText>
           <ThemedText style={styles.childCount}>{count}</ThemedText>
         </View>
 
         <View style={[styles.propBox, styles.bottomPropBox]}>
-          <ThemedText style={styles.propLabel}>PROPS FUNCTION</ThemedText>
-          <ThemedText style={styles.propMeta}>Triggers Parent State</ThemedText>
         </View>
       </View>
 
@@ -51,8 +47,6 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <ThemedView style={styles.screenShell}>
-        <ThemedText style={styles.screenTop}>Parent Component</ThemedText>
-        <ThemedText style={styles.screenSubtitle}>The Parent Component that has state locker and child component.</ThemedText>
 
         <View style={styles.parentStateCard}>
           <ThemedText style={styles.parentLabel}>STATE LOCKER</ThemedText>
@@ -73,113 +67,122 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
+    paddingTop: 18,
+    paddingHorizontal: 8,
+    paddingBottom: 8,
     backgroundColor: '#120d26',
   },
   screenShell: {
-    flex: 1,
+    width: '100%',
+    maxWidth: 420,
+    alignItems: 'stretch',
     backgroundColor: '#161239',
-    borderRadius: 30,
-    padding: 24,
+    borderRadius: 16,
+    padding: 10,
     borderWidth: 1,
     borderColor: '#3e3c7a',
+    marginTop: 150,
   },
   screenTop: {
     color: '#f8f4ff',
-    fontSize: 28,
+    fontSize: 18,
     fontWeight: '800',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   screenSubtitle: {
     color: '#b3b1d4',
-    fontSize: 14,
-    marginBottom: 24,
+    fontSize: 10,
+    marginBottom: 8,
+    lineHeight: 14,
   },
   parentStateCard: {
     backgroundColor: '#2c2763',
-    borderRadius: 24,
-    paddingVertical: 20,
-    paddingHorizontal: 18,
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     alignItems: 'center',
-    marginBottom: 26,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#4f4a9d',
   },
   parentLabel: {
-    color: '#9da7ff',
-    fontSize: 12,
+    color: '#c9d1ff',
+    fontSize: 9,
     fontWeight: '700',
     textTransform: 'uppercase',
-    letterSpacing: 1.1,
-    marginBottom: 10,
+    letterSpacing: 0.8,
+    marginBottom: 3,
   },
   parentCount: {
     color: '#ffffff',
-    fontSize: 62,
+    fontSize: 22,
     fontWeight: '900',
+    textShadowColor: 'rgba(255,255,255,0.25)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
   childCard: {
     backgroundColor: '#1b1840',
-    borderRadius: 28,
-    padding: 22,
+    borderRadius: 16,
+    padding: 8,
     borderWidth: 1,
     borderColor: '#3e3c7a',
+    marginBottom: 8,
   },
   childHeaderRow: {
-    marginBottom: 12,
+    marginBottom: 4,
   },
   childTitle: {
     color: '#f3edf5',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '800',
     marginBottom: 2,
   },
   childSubtitle: {
     color: '#a29fd1',
-    fontSize: 13,
+    fontSize: 9,
   },
   childBody: {
     color: '#dcd7ff',
-    fontSize: 15,
-    marginBottom: 18,
+    fontSize: 11,
+    marginBottom: 8,
   },
   propBox: {
     backgroundColor: '#272159',
-    padding: 14,
+    padding: 6,
   },
   topPropBox: {
-    borderTopLeftRadius: 22,
-    borderTopRightRadius: 22,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
   },
   bottomPropBox: {
-    borderBottomLeftRadius: 22,
-    borderBottomRightRadius: 22,
-  
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
   },
   propLabel: {
     color: '#c2c0ff',
-    fontSize: 12,
+    fontSize: 8,
     fontWeight: '800',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   propMeta: {
     color: '#9a97c6',
-    fontSize: 12,
+    fontSize: 8,
   },
   countCard: {
-    borderRadius: 22,
+    borderRadius: 14,
     overflow: 'hidden',
-    marginBottom: 20,
+    marginBottom: 8,
     backgroundColor: '#272159',
   },
   countContainer: {
     backgroundColor: '#1e173e',
-    paddingVertical: 40,
+    paddingVertical: 14,
     alignItems: 'center',
   },
   childCount: {
     color: '#fefefe',
-    fontSize: 82,
+    fontSize: 20,
     fontWeight: '900',
     textAlign: 'center',
   },
